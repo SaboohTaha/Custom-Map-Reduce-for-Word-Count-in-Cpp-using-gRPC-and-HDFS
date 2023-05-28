@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package masterslave;
+
+service MasterService 
+{
+  rpc UpdateControlInterval(UpdateControlIntervalRequest) returns (UpdateControlIntervalResponse);
+  rpc QuerySlaveStatus(QuerySlaveStatusRequest) returns (QuerySlaveStatusResponse);
+  rpc RegisterSlave(RegisterSlaveRequest) returns (RegisterSlaveResponse);
+}
+
+service SlaveService 
+{
+  rpc ControlSignal(ControlSignalRequest) returns (ControlSignalResponse);
+  rpc Map(MapRequest) returns (MapResponse);
+  rpc Reduce(ReduceRequest) returns (ReduceResponse);
+}
+
+message ControlSignalRequest {}  
+message ControlSignalResponse {}
+
+message UpdateControlIntervalRequest 
+{
+    int64 interval = 1;
+}
+message UpdateControlIntervalResponse 
+{
+    bool success = 1;
+}
+
+message QuerySlaveStatusRequest 
+{
+    string address = 1;
+}  
+message QuerySlaveStatusResponse 
+{
+    bool responsive = 1;
+}
+
+message RegisterSlaveRequest 
+{
+    string address = 1;
+}
+message RegisterSlaveResponse
+{
+    bool success = 1;
+}
+
+message MapRequest{
+    string filepath = 1;
+    string filename = 2;
+    int64 chunksize = 3;
+    int64 chunknumber = 4;
+}
+message MapResponse{
+}
+message ReduceRequest{
+    string maplocation = 1;
+    int64 numofmaps = 2;
+    string keyrange = 3;
+}
+message ReduceResponse{
+}
